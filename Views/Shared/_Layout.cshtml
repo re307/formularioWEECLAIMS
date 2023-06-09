@@ -21,10 +21,112 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 <script>
-    $("#envioFormulario").click((e) => {
+    $(document).ready(function () {
+        $("#envioFormulario").prop("disabled", true);
+        //Siempre que salgamos de un campo de texto, se chequeará esta función
+        $("#formularioRegistro input").keyup(function () {
+            var form = $(this).parents("#formularioRegistro");
+            var check = checkCampos(form);
+            if (check) {
+                $("#envioFormulario").prop("disabled", false);
+            }
+            else {
+                $("#envioFormulario").prop("disabled", true);
+            }
+        });
+    });
+
+    //Función para comprobar los campos de texto
+    function checkCampos(obj) {
+        var camposRellenados = true;
+        obj.find("input").each(function () {
+            var $this = $(this);
+            if ($this.val().length <= 0) {
+                camposRellenados = false;
+                return false;
+            }
+        });
+        if (camposRellenados == false) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    let limite = 0;
+    $('#cedula').keyup((e) => {
+        let val = $('#cedula').val();
+        console.log(val.length);
+        if (val.length == 8) {
+
+            $.ajax({
+                type: "POST"
+                , url: "/Home/ConsultaCedula"
+                , data: { cedula: val }
+                , complete: (data) => {
+                    console.log(data.responseJSON.respuesta);
+                    let respuestaSep = JSON.parse(data.responseJSON.respuesta);
+                    console.log(respuestaSep);
+                    if (respuestaSep.items.length > 0) {
+                        if (respuestaSep.items.length == 1) {
+                            let nombreCompleto = respuestaSep.items[0].paterno + ' ' + respuestaSep.items[0].materno + ' '+respuestaSep.items[0].nombre;
+                            let titulo = respuestaSep.items[0].titulo;
+                            $('#nombreRealcion').val(nombreCompleto);
+                            $('#titulo').val(titulo);
+                        } else {
+
+                        }
+                    }
+                }
+            });
+        }
+    });
+
+    $("#envioFormulario").click(async(e) => {
         e.preventDefault();
-        var data = $("#formularioRegistro").serialize();
-        console.log(data);
+        var dataForm = $("#formularioRegistro").serialize();
+        console.log(dataForm);
+        var dataSeparar = dataForm.split('&');
+
+        var dataEnvio = {};
+
+        dataSeparar.forEach((value) => {
+            console.log(value);
+            var divideData = value.split('=');
+            dataEnvio[divideData[0]] = $(`#${divideData[0]}`).val();
+        });
+
+        console.log(dataEnvio);
+
+        $.ajax({
+            type: "POST"
+            , url: "/Home/RegistraUsuario"
+            , data: { dataUsuario: JSON.stringify(dataEnvio) }
+            , complete: (data) => {
+                console.log(data.responseJSON.respuesta); $.ajax({
+                    type: "POST"
+                    , url: "/Home/Registrados"
+                    //, data: { dataUsuario: JSON.stringify(dataEnvio) }
+                    , complete: (data) => {
+                        console.log(data.responseJSON);
+                        var htmlBody = "";
+                        data.responseJSON.forEach((value) => {
+                            htmlBody = `${htmlBody}<tr>`;
+                            htmlBody = `${htmlBody}<td>${value.Compañia}</td>`;
+                            htmlBody = `${htmlBody}<td>${value.Cedula}</td>`;
+                            htmlBody = `${htmlBody}<td>${value.Nombre}</td>`;
+                            htmlBody = `${htmlBody}<td>${value.Titulo}</td>`;
+                            htmlBody = `${htmlBody}<td>${value.Correo}</td>`;
+                            htmlBody = `${htmlBody}<td>${value.Telefono}</td>`;
+                            htmlBody = `${htmlBody}</tr>`;
+                        });
+                        $('#cuerpoTabla').html(htmlBody);
+                        $('#tableInfo').show();
+                        $("#formularioRegistro")[0].reset();
+                    }
+                });
+            }
+        });
     });
 </script>
 </body>

@@ -4,37 +4,51 @@
 
 
 <div class="row">
-    <div class="col-md-6">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <div class="col-md-6" id="logo-contenedor">
+        <img src="~/Imagenes/weeclaims.png"/>
     </div>
-    <div class="col-md-6">
-        <h1>Registro para aspirantes</h1>
+    <div class="col-md-6" >
+        <h1 style="color: blue; ">Registro para aspirantes</h1>
         <br />
         <br />
-        <form id="formularioRegistro" action="#">
+        <form id="formularioRegistro" method="post">
             <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre de la compañia" aria-label="Nombre de la compañia">
             <br />
-            <input type="text" name="cedula" id="cedula"  class="form-control" placeholder="Cedula" aria-label="Cedula">
+            <input type="text" name="cedula" id="cedula" class="form-control" placeholder="Cedula" aria-label="Cedula" maxlength="10" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
             <br />
-            <input type="text" name="nombreRealcion" id="nombreRealcion"  class="form-control" placeholder="Nombre de la persona para contacto" aria-label="Nombre de la persona para contacto">
+            <input type="text" name="nombreRealcion" id="nombreRealcion" class="form-control" placeholder="Nombre de la persona para contacto" aria-label="Nombre de la persona para contacto">
             <br />
-            <input type="text" name="titulo" id="titulo"  class="form-control" placeholder="Titulo" aria-label="Titulo">
+            <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Titulo" aria-label="Titulo">
             <br />
-            <input type="text" name="email" id="email"  class="form-control" placeholder="Correo electrónico" aria-label="Correo electrónico">
+            <input type="email" name="email" id="email" class="form-control" placeholder="Correo electrónico" aria-label="Correo electrónico">
             <br />
-            <input type="text" name="telefono" id="telefono"  class="form-control" placeholder="Teléfono" aria-label="Teléfono">
+            <input type="text" name="telefono" id="telefono" class="form-control" placeholder="Teléfono" aria-label="Teléfono" maxlength="10" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
             <br />
-            <input type="checkbox"  name="aceptaTerminos" id="aceptaTerminos" > He leído y acepto el Aviso de privacidad/Terminos y condiciones
+            <input type="checkbox" name="aceptaTerminos" id="aceptaTerminos"> He leído y acepto el <button type="button" class="btn btn-link">Aviso de privacidad/Terminos y condiciones</button>
             <br />
             <br />
-            <button type="submit" id="envioFormulario" class="btn btn-primary">Continuar</button>
+            <button id="envioFormulario" class="btn btn-primary" disable>Continuar</button>
             <br />
         </form>
     </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+<div id="tableInfo" style="display:none">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Compañia</th>
+                <th>Cedula</th>
+                <th>Nombre</th>
+                <th>Titulo</th>
+                <th>Correo</th>
+                <th>Telefono</th>
+            </tr>
+        </thead>
+        <tbody id="cuerpoTabla">
+        </tbody>
+    </table>
 </div>

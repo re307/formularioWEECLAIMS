@@ -84,3 +84,7 @@ C:\Users\User\Documents\GitHub\formularioWEECLAIMS\obj\Debug\formularioWEECLAIMS
 C:\Users\User\Documents\GitHub\formularioWEECLAIMS\obj\Debug\formularioWEECLAIMS.csproj.CopyComplete
 C:\Users\User\Documents\GitHub\formularioWEECLAIMS\obj\Debug\formularioWEECLAIMS.dll
 C:\Users\User\Documents\GitHub\formularioWEECLAIMS\obj\Debug\formularioWEECLAIMS.pdb
+C:\Users\User\Documents\GitHub\formularioWEECLAIMS\bin\EntityFramework.dll
+C:\Users\User\Documents\GitHub\formularioWEECLAIMS\bin\EntityFramework.SqlServer.dll
+C:\Users\User\Documents\GitHub\formularioWEECLAIMS\bin\EntityFramework.xml
+C:\Users\User\Documents\GitHub\formularioWEECLAIMS\bin\EntityFramework.SqlServer.xml
